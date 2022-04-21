@@ -1,0 +1,16 @@
+body {
+    text-align: center;
+    max-width: max-content;
+    margin: auto;
+}
+
+#grid{
+    background-color: black;
+}
+
+td {
+    height: 80px;
+    width: 80px;
+    background-color: #bbb;
+    border-radius: 50%;
+}
