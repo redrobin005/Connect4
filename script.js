@@ -9,7 +9,25 @@ function columnClick(){
     });
 }
 
+let grid = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+]
+
+let turnCount = 0
 function dropChip(){
-    const colNum = this.getAttribute("col-num")
-    console.log(colNum)
+    let colNum = this.getAttribute("col-num")
+    colNum = parseInt(colNum)
+    --colNum;
+    if (turnCount % 2 === 0) {
+        grid[colNum].push('r')
+    }else{
+        grid[colNum].push('y')
+    }
+    ++turnCount;
+    console.log(grid)
 }
