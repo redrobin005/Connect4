@@ -3,8 +3,8 @@ window.onload = function(){
 }
 
 function columnClick(){
-    const cols = document.querySelectorAll('.col')
-    cols.forEach(function(elem) {
+    const cells = document.querySelectorAll('.cell')
+    cells.forEach(function(elem) {
         elem.addEventListener("click", dropChip);
     });
 }
@@ -16,13 +16,13 @@ let grid = [
     [],
     [],
     [],
+    [],
 ]
 
 let turnCount = 0
 function dropChip(){
-    let colNum = this.getAttribute("col-num")
+    let colNum = this.parentElement.getAttribute("col-num")
     colNum = parseInt(colNum)
-    --colNum;
     if (turnCount % 2 === 0) {
         grid[colNum].push('r')
     }else{

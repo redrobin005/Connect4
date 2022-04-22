@@ -6,9 +6,12 @@ body {
 
 #grid{
     background-color: black;
+    display: flex;
+    flex-wrap: wrap;
+    
 }
 
-td {
+.cell {
     height: 80px;
     width: 80px;
     background-color: #bbb;
