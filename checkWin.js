@@ -4,18 +4,19 @@ function checkWinner(){
     if (turns.length < 7) {
         return null
     }
+
     initialiseColourArrays()
-    if(straightWin(redArray, "row") || straightWin(redArray, "column") || diagonalWin1(redArray) ||  diagonalWin2(redArray)){
+    if(straightWin(redArray, "row") || straightWin(redArray, "column") || diagonalWin(redArray)){
+        console.log('Red Win')
         alert('Red Win')
-        //location.reload()
     }
-    if(straightWin(yellowArray, "row") || straightWin(yellowArray, "column") || diagonalWin1(yellowArray) ||  diagonalWin2(yellowArray)){
+    if(straightWin(yellowArray, "row") || straightWin(yellowArray, "column") || diagonalWin(yellowArray)){
+        console.log('Yellow Win')
         alert('Yellow Win')
-        //location.reload()
     }
+
     if (turns.length === 42) {
-        alert('Nobody wins')
-        location.reload()
+        console.log('Nobody wins')
     }
 
     return null;
@@ -27,8 +28,7 @@ function initialiseColourArrays(){
     redArray = []
     yellowArray = []
     for (let i = 0; i < turns.length; i++) {
-        let turnColour = turns[i].colour
-    
+        const turnColour = turns[i].colour
         if (turnColour === "red") {
             redArray.push(turns[i])
         }else if (turnColour === "yellow"){
@@ -37,29 +37,51 @@ function initialiseColourArrays(){
     }
 }
 
+// straight win occurs if 4 chips in same col/row
+// with the opposite col/row in 1 interval sequence
 function straightWin(arr, rc){
+    let fourChipRCArray = fourChips(arr,rc)
+    if (fourChipRCArray) {
+        for (let i = 0; i < fourChipRCArray.length; i++) {
+            let oppositeRCArray = getOppositeRCArray(arr, rc, fourChipRCArray[i])
+            if (checkSequence(oppositeRCArray)) {
+                return true;
+            }
+        }
+    }
+    return false
+}
+
+// check if there if there's 4 reds or yellows in a row/col
+// return these rows/cols
+function fourChips(arr, rc){
     let countArray = []
     for (let i = 0; i < arr.length; i++) {
         countArray.push(arr[i][rc])
     }
     countArray.sort((a, b) => a - b)
     
+    matchingRCArray = []
     let counter = 1
-    for (let i = 0; i < countArray.length; i++) {
-        if (i > 0 && countArray[i-1] === countArray[i]){
+    for (let i = 1; i < countArray.length; i++) {
+        if (countArray[i-1] === countArray[i]){
             ++counter
-            if (counter === 4 && checkAdjacent(arr, rc, countArray[i])) {
-                console.log(countArray)
-                return true
+            if (counter === 4) {
+                matchingRCArray.push(countArray[i])
             }
         }else{
             counter = 1
         }
         
     }
+    if (matchingRCArray.length > 0) {
+        return matchingRCArray
+    }else{
+        return null
+    }
 }
 
-function checkAdjacent(arr, rc, rcNum){
+function getOppositeRCArray(arr, rc, rcNum){
     let oppositeRCArray = []
     if (rc === 'row') {
         arr.forEach(element => {
@@ -74,35 +96,26 @@ function checkAdjacent(arr, rc, rcNum){
             }
         });
     }
-
-    oppositeRCArray.sort((a, b) => a - b)
-    return checkSequence(oppositeRCArray)
-
+    return oppositeRCArray
 }
 
 function checkSequence(arr){
+    arr.sort((a, b) => a - b)
     let sequence = false
-    let count = 1
-    for (let i = 0; i < arr.length; i++) {
-        if (i > 0) {
-            if (arr[i] === arr[i-1] + 1) {
-                sequence = true
-                count++
-            }else{
-                sequence = false
-                count = 1
-            }
-            if (sequence && count === 4) {
+    let counter = 1
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] === arr[i-1] + 1) {
+            sequence = true
+            ++counter
+            if (counter === 4) {
                 return true
             }
+        }else{
+            sequence = false
         }
     }
 }
 
-function diagonalWin1(arr){
-return false
-}
-
-function diagonalWin2(arr){
-return false
+function diagonalWin(arr){
+    return false
 }

@@ -2,6 +2,8 @@ body {
     text-align: center;
     max-width: max-content;
     margin: auto;
+    background-color: beige;
+    /* background-image: linear-gradient(to right, turquoise , white); */
 }
 
 #grid{
