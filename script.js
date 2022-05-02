@@ -30,16 +30,17 @@ function dropChip(){
             if (turnCount % 2 === 0) {
                 grid[i][colNum] = 'r'
                 cellElement.style.backgroundColor  = 'red'
+                checkWinner('r', i, colNum)
                 break
             }else{
                 grid[i][colNum] = 'y'
                 cellElement.style.backgroundColor  = 'yellow'
+                checkWinner('y', i, colNum)
                 break
             }  
         }
     }
     ++turnCount;
     console.log(grid)
-    checkWinner()
 }
 

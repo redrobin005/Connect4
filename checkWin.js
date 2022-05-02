@@ -1,121 +1,54 @@
-function checkWinner(){
-    console.log("checkWinner was called");
+function checkWinner(currVal, currRow, currCol){
+    let winner = currVal === 'r' ? 'Red' : 'Yellow'
 
-    if (turns.length < 7) {
-        return null
-    }
-
-    initialiseColourArrays()
-    if(straightWin(redArray, "row") || straightWin(redArray, "column") || diagonalWin(redArray)){
-        console.log('Red Win')
-        alert('Red Win')
-    }
-    if(straightWin(yellowArray, "row") || straightWin(yellowArray, "column") || diagonalWin(yellowArray)){
-        console.log('Yellow Win')
-        alert('Yellow Win')
-    }
-
-    if (turns.length === 42) {
-        console.log('Nobody wins')
+    if(
+        horizontalWin(currVal, currRow, currCol) ||
+        verticalWin(currVal, currRow, currCol)
+    ){
+        alert(`Winner is ${winner} !!!`)
     }
 
     return null;
 }
 
-let redArray = []
-let yellowArray = []
-function initialiseColourArrays(){
-    redArray = []
-    yellowArray = []
-    for (let i = 0; i < turns.length; i++) {
-        const turnColour = turns[i].colour
-        if (turnColour === "red") {
-            redArray.push(turns[i])
-        }else if (turnColour === "yellow"){
-            yellowArray.push(turns[i])
-        }
-    }
-}
+function horizontalWin(currVal, currRow, currCol){
+    const maxPoint = grid[currRow].length
+    const minPoint = 0 
+    let r = 0
+    let l = 0
 
-// straight win occurs if 4 chips in same col/row
-// with the opposite col/row in 1 interval sequence
-function straightWin(arr, rc){
-    let fourChipRCArray = fourChips(arr,rc)
-    if (fourChipRCArray) {
-        for (let i = 0; i < fourChipRCArray.length; i++) {
-            let oppositeRCArray = getOppositeRCArray(arr, rc, fourChipRCArray[i])
-            if (checkSequence(oppositeRCArray)) {
-                return true;
-            }
-        }
-    }
-    return false
-}
-
-// check if there if there's 4 reds or yellows in a row/col
-// return these rows/cols
-function fourChips(arr, rc){
-    let countArray = []
-    for (let i = 0; i < arr.length; i++) {
-        countArray.push(arr[i][rc])
-    }
-    countArray.sort((a, b) => a - b)
-    
-    matchingRCArray = []
-    let counter = 1
-    for (let i = 1; i < countArray.length; i++) {
-        if (countArray[i-1] === countArray[i]){
-            ++counter
-            if (counter === 4) {
-                matchingRCArray.push(countArray[i])
-            }
+    for (let i = currCol; i < maxPoint; i++) {
+        let val = grid[currRow][i]
+        if(currVal === val){
+            ++r
         }else{
-            counter = 1
+            break
         }
-        
     }
-    if (matchingRCArray.length > 0) {
-        return matchingRCArray
-    }else{
-        return null
-    }
-}
-
-function getOppositeRCArray(arr, rc, rcNum){
-    let oppositeRCArray = []
-    if (rc === 'row') {
-        arr.forEach(element => {
-            if (element.row === rcNum) {
-                oppositeRCArray.push(element.column)
-            }
-        });
-    }else{
-        arr.forEach(element => {
-            if (element.column === rcNum) {
-                oppositeRCArray.push(element.row)
-            }
-        });
-    }
-    return oppositeRCArray
-}
-
-function checkSequence(arr){
-    arr.sort((a, b) => a - b)
-    let sequence = false
-    let counter = 1
-    for (let i = 1; i < arr.length; i++) {
-        if (arr[i] === arr[i-1] + 1) {
-            sequence = true
-            ++counter
-            if (counter === 4) {
-                return true
-            }
+    for (let i = currCol; i => minPoint; i--) {
+        let val = grid[currRow][i]
+        if(currVal === val){
+            ++l
         }else{
-            sequence = false
+            break
         }
     }
+
+    return (r + l - 1) === 4 ? true : false
 }
 
-function diagonalWin(arr){
-    return false
+function verticalWin(currVal, currRow, currCol){
+    const minPoint = 0 
+    let d = 0
+
+    for (let i = currRow; i >= minPoint; i--) {
+        let val = grid[i][currCol]
+        if(currVal === val){
+            ++d
+        }else{
+            break
+        }
+    }
+
+    return d === 4 ? true : false
 }
