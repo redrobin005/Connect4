@@ -3,7 +3,9 @@ function checkWinner(currVal, currRow, currCol){
 
     if(
         horizontalWin(currVal, currRow, currCol) ||
-        verticalWin(currVal, currRow, currCol)
+        verticalWin(currVal, currRow, currCol) ||
+        posDiagonalWin(currVal, currRow, currCol) ||
+        negDiagonalWin(currVal, currRow, currCol)
     ){
         alert(`Winner is ${winner} !!!`)
     }
@@ -51,4 +53,79 @@ function verticalWin(currVal, currRow, currCol){
     }
 
     return d === 4 ? true : false
+}
+
+
+function posDiagonalWin(currVal, currRow, currCol){
+    const rowLength = grid[currRow].length
+    const colLength = grid[currRow][currCol].length
+    const maxPoint = rowLength > colLength ? rowLength : colLength
+    const minPoint = 0 
+    let r = 0
+    let l = 0
+
+    let row = currRow
+    let col = currCol
+    while(row < maxPoint && col < maxPoint){
+        let val = grid[row][col]
+        if(currVal === val){
+            ++r
+        }else{
+            break
+        }
+        ++row
+        ++col
+    }
+
+    row = currRow
+    col = currCol
+    while(row >= minPoint && col >= minPoint){
+        let val = grid[row][col]
+        if(currVal === val){
+            ++l
+        }else{
+            break
+        }
+        --row
+        --col
+    }
+
+    return (r + l - 1) === 4 ? true : false
+}
+
+function negDiagonalWin(currVal, currRow, currCol){
+    const rowLength = grid[currRow].length
+    const colLength = grid[currRow][currCol].length
+    const maxPoint = rowLength > colLength ? rowLength : colLength
+    const minPoint = 0 
+    let r = 0
+    let l = 0
+
+    let row = currRow
+    let col = currCol
+    while(row >= minPoint && col < maxPoint){
+        let val = grid[row][col]
+        if(currVal === val){
+            ++r
+        }else{
+            break
+        }
+        --row
+        ++col
+    }
+
+    row = currRow
+    col = currCol
+    while(row < maxPoint && col >= minPoint){
+        let val = grid[row][col]
+        if(currVal === val){
+            ++l
+        }else{
+            break
+        }
+        ++row
+        --col
+    }
+
+    return (r + l - 1) === 4 ? true : false
 }
