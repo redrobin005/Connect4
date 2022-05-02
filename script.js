@@ -3,13 +3,12 @@ window.onload = function(){
 }
 
 let grid = [
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null]
 ]
 
 function columnClick(){
@@ -19,35 +18,28 @@ function columnClick(){
     });
 }
 
-turns = []
 let turnCount = 0
 function dropChip(){
     let colNum = this.parentElement.getAttribute("col-num")
     colNum = parseInt(colNum)
-    if (grid[colNum].length < 6) {
-        if (turnCount % 2 === 0) {
-            grid[colNum].push('r')
-            turns.push({column : colNum, row : grid[colNum].length - 1 , colour : 'red'})
-        }else{
-            grid[colNum].push('y')
-            turns.push({column : colNum, row : grid[colNum].length - 1 , colour : 'yellow'})
-        }  
+    for (let i = 0; i <  grid.length; i++) {
+        const elem = grid[i][colNum]
+        if (elem === null) {
+            let colElement = document.querySelectorAll(`[col-num="${colNum}"]`)[0]
+            let cellElement = colElement.querySelectorAll(`[row-num="${i}"]`)[0]
+            if (turnCount % 2 === 0) {
+                grid[i][colNum] = 'r'
+                cellElement.style.backgroundColor  = 'red'
+                break
+            }else{
+                grid[i][colNum] = 'y'
+                cellElement.style.backgroundColor  = 'yellow'
+                break
+            }  
+        }
     }
     ++turnCount;
-    drawBoard()
+    console.log(grid)
     checkWinner()
 }
 
-function drawBoard(){
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[i].length; j++) {
-            let colElement = document.querySelectorAll(`[col-num="${i}"]`)[0]
-            let cellElement = colElement.querySelectorAll(`[row-num="${j}"]`)[0]
-            if (grid[i][j] === 'r') {
-                cellElement.style.backgroundColor  = 'red'
-            }else{
-                cellElement.style.backgroundColor  = 'yellow'
-            }
-        }
-    }
-}
