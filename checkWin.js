@@ -1,5 +1,7 @@
 function checkWinner(currVal, currRow, currCol){
-    let winner = currVal === 'r' ? 'Red' : 'Yellow'
+    let playerOne = sessionStorage.getItem('playerOne');
+    let playerTwo = sessionStorage.getItem('playerTwo');
+    let winner = currVal === 'r' ? playerOne : playerTwo
 
     if(
         horizontalWin(currVal, currRow, currCol) ||

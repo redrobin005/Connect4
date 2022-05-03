@@ -1,6 +1,7 @@
 window.onload = function(){
     drawBoard()
     columnClick()
+    turnAssign(0)
 }
 let grid
 
@@ -61,6 +62,15 @@ function dropChip(){
         }
     }
     ++turnCount;
+    turnAssign(turnCount)
     console.log(grid)
+}
+
+function turnAssign(turnCount){
+    let playerOne = sessionStorage.getItem('playerOne');
+    let playerTwo = sessionStorage.getItem('playerTwo');
+    let player = turnCount % 2 === 0 ? playerOne : playerTwo
+    let turnElem = document.querySelector('#turnDisplay')
+    turnElem.innerText = `Your turn ${player}`
 }
 
