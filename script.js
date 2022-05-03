@@ -1,15 +1,35 @@
 window.onload = function(){
+    drawBoard()
     columnClick()
 }
+let grid
 
-let grid = [
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null]
-]
+function drawBoard(){
+    rowSize = JSON.parse(sessionStorage.getItem('rowSize'));
+    rowSize = rowSize ? rowSize : 6
+    colSize = JSON.parse(sessionStorage.getItem('colSize'));
+    colSize = colSize ? colSize : 7
+    grid = Array(rowSize).fill(null).map(() => Array(colSize).fill(null))
+    console.log(grid)
+    drawBoardHTML(rowSize, colSize)
+}
+
+function drawBoardHTML(rowSize, colSize){
+    const gridHTML = document.querySelector('#grid')
+    for (let i = 0; i < rowSize; i++) {
+        let colHTML = document.createElement('div')
+        colHTML.setAttribute('class', 'col')
+        colHTML.setAttribute('col-num', `${i}`)
+        gridHTML.append(colHTML)
+        for (let j = 0; j < colSize; j++) {
+            let cellHTML = document.createElement('div')
+            cellHTML.setAttribute('class', 'cell')
+            cellHTML.setAttribute('row-num', `${j}`)
+            colHTML.prepend(cellHTML)
+        }
+
+    }
+}
 
 function columnClick(){
     const cells = document.querySelectorAll('.cell')
