@@ -6,10 +6,8 @@ window.onload = function(){
 let grid
 
 function drawBoard(){
-    rowSize = JSON.parse(sessionStorage.getItem('rowSize'));
-    rowSize = rowSize ? rowSize : 6
-    colSize = JSON.parse(sessionStorage.getItem('colSize'));
-    colSize = colSize ? colSize : 7
+    rowSize = JSON.parse(getFromStorage('rowSize', 6));
+    colSize = JSON.parse(getFromStorage('colSize', 7));
     grid = Array(rowSize).fill(null).map(() => Array(colSize).fill(null))
     console.log(grid)
     drawBoardHTML(rowSize, colSize)
@@ -67,10 +65,15 @@ function dropChip(){
 }
 
 function turnAssign(turnCount){
-    let playerOne = sessionStorage.getItem('playerOne');
-    let playerTwo = sessionStorage.getItem('playerTwo');
+    let playerOne = getFromStorage('playerOne', 'Will Smith')
+    let playerTwo = getFromStorage('playerTwo', 'Chris Rock')
     let player = turnCount % 2 === 0 ? playerOne : playerTwo
     let turnElem = document.querySelector('#turnDisplay')
     turnElem.innerText = `Your turn ${player}`
+}
+
+function getFromStorage(name, alt){
+    let item = sessionStorage.getItem(name);
+    return item = item ? item : alt
 }
 

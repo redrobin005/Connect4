@@ -1,6 +1,6 @@
 function checkWinner(currVal, currRow, currCol){
-    let playerOne = sessionStorage.getItem('playerOne');
-    let playerTwo = sessionStorage.getItem('playerTwo');
+    let playerOne = getFromStorage('playerOne', 'Will Smith')
+    let playerTwo = getFromStorage('playerTwo', 'Chris Rock')
     let winner = currVal === 'r' ? playerOne : playerTwo
 
     if(
