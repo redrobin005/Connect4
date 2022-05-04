@@ -69,7 +69,20 @@ function turnAssign(turnCount){
     let playerTwo = getFromStorage('playerTwo', 'Plato')
     let player = turnCount % 2 === 0 ? playerOne : playerTwo
     let turnElem = document.querySelector('#turnDisplay')
-    turnElem.innerText = `Your turn ${player}`
+    turnElem.innerText = `Turn: ${player}`
+    turnColour(turnElem)
+    
+}
+
+function turnColour(turnElem){
+    let colour = turnCount % 2 === 0 ? '#ff6961' : '#fdfd96'
+    let badge = document.createElement('span')
+    badge.setAttribute('class', 'badge')
+    badge.setAttribute('id', 'turnColour')
+    badge.innerText = ' '
+    badge.style.backgroundColor = colour
+    badge.style.marginRight = '10px'
+    turnElem.prepend(badge)
 }
 
 function getFromStorage(name, alt){
