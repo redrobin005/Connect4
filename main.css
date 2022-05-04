@@ -2,20 +2,27 @@ body {
     text-align: center;
     max-width: max-content;
     margin: auto;
-    background-color: beige;
-    /* background-image: linear-gradient(to right, turquoise , white); */
+    /* background-color: #F4976C; */
+    background-image: url('media/palette1b.png');
+    background-size: cover;
+    font-family: 'Press Start 2P', cursive;
+    font-family: 'VT323', monospace;
+    font-size: large;
+    
 }
 
 #grid{
-    background-color: black;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     
 }
 
 .cell {
     height: 80px;
     width: 80px;
-    background-color: #bbb;
+    background-color: #303C6C ;
     border-radius: 50%;
+    border: solid;
+    border-color:#B4DFE5;
 }
