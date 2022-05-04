@@ -9,7 +9,11 @@ function checkWinner(currVal, currRow, currCol){
         posDiagonalWin(currVal, currRow, currCol) ||
         negDiagonalWin(currVal, currRow, currCol)
     ){
-        alert(`Winner is ${winner} !!!`)
+        //alert(`Winner is ${winner} !!!`)
+        let modal = document.getElementById('myModal');
+        modal.style.display = "block";
+        let winnerName = document.getElementById('winnerName');
+        winnerName.innerText = `Congratulations ${winner}!!!`
     }
 
     return null;

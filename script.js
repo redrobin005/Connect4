@@ -15,12 +15,12 @@ function drawBoard(){
 
 function drawBoardHTML(rowSize, colSize){
     const gridHTML = document.querySelector('#grid')
-    for (let i = 0; i < rowSize; i++) {
+    for (let i = 0; i < colSize; i++) {
         let colHTML = document.createElement('div')
         colHTML.setAttribute('class', 'col')
         colHTML.setAttribute('col-num', `${i}`)
         gridHTML.append(colHTML)
-        for (let j = 0; j < colSize; j++) {
+        for (let j = 0; j < rowSize; j++) {
             let cellHTML = document.createElement('div')
             cellHTML.setAttribute('class', 'cell')
             cellHTML.setAttribute('row-num', `${j}`)
@@ -48,12 +48,12 @@ function dropChip(){
             let cellElement = colElement.querySelectorAll(`[row-num="${i}"]`)[0]
             if (turnCount % 2 === 0) {
                 grid[i][colNum] = 'r'
-                cellElement.style.backgroundColor  = 'red'
+                cellElement.style.backgroundColor  = '#ff6961'
                 checkWinner('r', i, colNum)
                 break
             }else{
                 grid[i][colNum] = 'y'
-                cellElement.style.backgroundColor  = 'yellow'
+                cellElement.style.backgroundColor  = '#fdfd96'
                 checkWinner('y', i, colNum)
                 break
             }  
@@ -65,8 +65,8 @@ function dropChip(){
 }
 
 function turnAssign(turnCount){
-    let playerOne = getFromStorage('playerOne', 'Will Smith')
-    let playerTwo = getFromStorage('playerTwo', 'Chris Rock')
+    let playerOne = getFromStorage('playerOne', 'Aristotle')
+    let playerTwo = getFromStorage('playerTwo', 'Plato')
     let player = turnCount % 2 === 0 ? playerOne : playerTwo
     let turnElem = document.querySelector('#turnDisplay')
     turnElem.innerText = `Your turn ${player}`

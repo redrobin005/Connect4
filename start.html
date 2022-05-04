@@ -17,20 +17,20 @@
     
     <title>Connect 4</title>
 </head>
-<body>
-    <h1>Let's Connect 4!</h1>
+<body id="startSettings">
+    <h1 class="title">Let's Connect 4!</h1>
 
-    <h3>Choose your board size:</h3>
-    <label for="colSize">Columns:</label>
-    <input type="number" id="colSize" name="colSize" value="6" min="1" max="20">
+    <h2>Choose your board size:</h2>
     <label for="rowSize">Rows:</label>
-    <input type="number" id="rowSize" name="rowSize" value="7" min="1" max="20">
+    <input type="number" id="rowSize" name="rowSize" value="6" min="1" max="20">
+    <label for="colSize">Columns:</label>
+    <input type="number" id="colSize" name="colSize" value="7" min="1" max="20">
 
-    <h3>Who's playing?</h3>
-    <label for="colSize">Player 1:</label>
-    <input type="text" id="playerOne" value="Boris Johnson">
-    <label for="rowSize">Player 2:</label>
-    <input type="text" id="playerTwo" value="Greta Thunberg">
+    <h2>Who's playing?</h2>
+    <label for="playerOne">Player 1:</label>
+    <input type="text" id="playerOne" value="Aristotle">
+    <label for="playerTwo">Player 2:</label>
+    <input type="text" id="playerTwo" value="Plato">
     <br><br>
     <button type="button" class="btn btn-primary" onclick="setGame()">Start</button>
 
