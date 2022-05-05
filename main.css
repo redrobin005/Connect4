@@ -1,12 +1,13 @@
 body {
     text-align: center;
-    max-width: max-content;
-    margin: auto;
-    /* background-color: #F4976C; */
     background-image: url('media/palette1b.png');
     background-size: cover;
     font-family: 'Press Start 2P', cursive;
     font-family: 'VT323', monospace;
+}
+h2, h3{
+    padding: 0px;
+    margin: 0px;
 }
 
 .title {
@@ -20,11 +21,33 @@ body {
     transform: translate(-50%,-90%);
 }
 
+#turnScore {
+    margin-left: 22vw;
+    margin-bottom: 1vh;
+}
+#turnDisplay, #scoreBoard {
+    border: solid;
+    border-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#scoreBoard {
+    margin-left: 10vw;
+}
+#scoreTitle {
+    font-size: xx-large;
+}
+.score{
+    margin-top: 0px;
+    font-size: xx-large;
+}
+
 #grid{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    
+    max-width: max-content;
+    margin: auto;
 }
 
 .col {

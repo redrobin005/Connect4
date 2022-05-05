@@ -18,9 +18,21 @@
 </head>
 <body>
     <h1 class="title">Let's Connect 4!</h1>
-    <h2 id="turnDisplay">Your Move X</h2>
-    <div id="grid"></div>
+    <div id="turnScore" class="row justify-content-center">
+      <div class="col-sm-6"><h2 id="turnDisplay">Your Move X</h2></div>
+      <div class="col-sm-2" id="scoreBoard">
+        <h3 id="scoreTitle">Scores</h3>
+        <span class="badge score" id="playerColour1" style="background-color: rgb(255, 105, 97);"> </span>
+        :
+        <span class="badge score" id="playerColour2" style="background-color: rgb(253, 253, 150);"> </span>
+        <br>
+        <span id="playerOneScore" class="score">0</span>
+        :
+        <span id="playerTwoScore" class="score">0</span>
+      </div>
+    </div>
 
+    <div id="grid" class="row"></div>
     <div class="modal" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -36,7 +48,6 @@
             </div>
             </div>
           </div>
-        </div>
       </div>
 
     <script src="script.js"type="text/javascript"></script> 

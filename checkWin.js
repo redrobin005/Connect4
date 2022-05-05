@@ -9,14 +9,38 @@ function checkWinner(currVal, currRow, currCol){
         posDiagonalWin(currVal, currRow, currCol) ||
         negDiagonalWin(currVal, currRow, currCol)
     ){
-        //alert(`Winner is ${winner} !!!`)
-        let modal = document.getElementById('myModal');
-        modal.style.display = "block";
-        let winnerName = document.getElementById('winnerName');
-        winnerName.innerText = `Congratulations ${winner}!!!`
+        displayWinModal(winner)
+        incrementScore(currVal)
     }
 
     return null;
+}
+
+function displayWinModal(winner){
+    let modal = document.getElementById('myModal');
+    modal.style.display = "block";
+    let winnerName = document.getElementById('winnerName');
+    winnerName.innerText = `Congratulations ${winner}!!!`
+}
+
+function incrementScore(winner){
+    if(winner === 'r'){
+        let score = parseInt(getFromStorage('playerOneScore', '0'))
+        sessionStorage.setItem('playerOneScore', ++score)
+    }else{
+        let score = parseInt(getFromStorage('playerTwoScore', '0'))
+        sessionStorage.setItem('playerTwoScore', ++score)
+    }
+}
+
+function setScore(){
+    let score1 = parseInt(getFromStorage('playerOneScore', '0'))
+    let scoreElem1 = document.querySelector('#playerOneScore')
+    scoreElem1.innerText = score1
+
+    let score2 = parseInt(getFromStorage('playerTwoScore', '0'))
+    let scoreElem2 = document.querySelector('#playerTwoScore')
+    scoreElem2.innerText = score2
 }
 
 function horizontalWin(currVal, currRow, currCol){

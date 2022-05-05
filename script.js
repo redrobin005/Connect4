@@ -2,6 +2,7 @@ window.onload = function(){
     drawBoard()
     columnClick()
     turnAssign(0)
+    setScore()
 }
 let grid
 
