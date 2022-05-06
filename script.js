@@ -4,6 +4,7 @@ window.onload = function(){
     turnAssign(0)
     setScore()
 }
+const randomAI = JSON.parse(getFromStorage('randomAI', false))
 let grid
 
 function drawBoard(){
@@ -34,14 +35,14 @@ function drawBoardHTML(rowSize, colSize){
 function columnClick(){
     const cells = document.querySelectorAll('.cell')
     cells.forEach(function(elem) {
-        elem.addEventListener("click", dropChip);
+        let colNum = elem.parentElement.getAttribute("col-num")
+        colNum = parseInt(colNum)
+        elem.addEventListener("click", () => dropChip(colNum));
     });
 }
 
 let turnCount = 0
-function dropChip(){
-    let colNum = this.parentElement.getAttribute("col-num")
-    colNum = parseInt(colNum)
+function dropChip(colNum){
     for (let i = 0; i <  grid.length; i++) {
         const elem = grid[i][colNum]
         if (elem === null) {
@@ -62,7 +63,19 @@ function dropChip(){
     }
     ++turnCount;
     turnAssign(turnCount)
+    if(randomAI && turnCount % 2 !== 0){randomMove()}
     console.log(grid)
+}
+
+function randomMove(){
+    const gridElem = document.querySelector('#grid')
+    gridElem.style.pointerEvents = "none"
+    setTimeout(() => {
+        const maxCol = grid[0].length
+        const randCol = Math.floor(Math.random() * maxCol)
+        dropChip(randCol)
+        gridElem.style.pointerEvents = "auto"
+      }, 1000);
 }
 
 function turnAssign(turnCount){
