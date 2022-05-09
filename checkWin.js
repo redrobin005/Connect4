@@ -1,19 +1,19 @@
 function checkWinner(currVal, currRow, currCol){
-    let playerOne = getFromStorage('playerOne', 'Will Smith')
-    let playerTwo = getFromStorage('playerTwo', 'Chris Rock')
-    let winner = currVal === 'r' ? playerOne : playerTwo
-
     if(
         horizontalWin(currVal, currRow, currCol) ||
         verticalWin(currVal, currRow, currCol) ||
         posDiagonalWin(currVal, currRow, currCol) ||
         negDiagonalWin(currVal, currRow, currCol)
     ){
+        let playerOne = getFromStorage('playerOne', 'Will Smith')
+        let playerTwo = getFromStorage('playerTwo', 'Chris Rock')
+        let winner = currVal === 'r' ? playerOne : playerTwo
+
         displayWinModal(winner)
         incrementScore(currVal)
+    }else{
+        return null;
     }
-
-    return null;
 }
 
 function displayWinModal(winner){
@@ -158,4 +158,12 @@ function negDiagonalWin(currVal, currRow, currCol){
     }
 
     return (r + l - 1) === 4 ? true : false
+}
+
+module.exports = {
+    checkWinner,
+    horizontalWin,
+    verticalWin,
+    posDiagonalWin,
+    negDiagonalWin
 }
