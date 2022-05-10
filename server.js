@@ -39,4 +39,28 @@ io.on('connection', socket => {
 
     // tell everyone the player num that has actually connected
     socket.broadcast.emit('player-connection', playerIndex)
+    
+    //handle disconnect
+    socket.on('disconnect', () =>{
+        console.log(`Player ${playerIndex} has disconnected`)
+        connections[playerIndex] = null
+        // tell everyone what player just disconnected
+        socket.broadcast.emit('player-connection', playerIndex)
+    })
+
+    // on ready
+    socket.on('player-ready', () => {
+        socket.broadcast.emit('enemy-ready', playerIndex)
+        connections[playerIndex] = true
+    })
+
+    // check player connections
+    socket.on('check-players', () =>{
+        const players = []
+        for (const i in connections){
+            connections[i] === null ? players.push({connected: false, ready: false}):
+            players.push({connected:true, ready: connections[i]})
+        }
+        socket.emit('check-players', players)
+    })
 })

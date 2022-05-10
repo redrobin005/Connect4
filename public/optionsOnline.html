@@ -29,12 +29,19 @@
     <br><br>
 
     <h2><b>Who's playing?</b></h2>
+    <h3 id="infoDisplay"></h3>
     <label for="playerOne">Player 1:</label>
     <input type="text" id="playerOne" value="Wall-E">
-    <label for="playerTwo">Random AI:</label>
-    <input type="text" id="playerTwo" value="Skynet" disabled>
+    <label for="playerTwo">Player 2:</label>
+    <input type="text" id="playerTwo" value="Skynet">
+    <br>
+    <label for="playerOneConn">Player 1 Connection:</label><span id="playerOneConn" style="background-color: red">&nbsp;</span>
+    <label for="playerTwoConn">Player 2 Connection:</label><span id="playerTwoConn" style="background-color: red">&nbsp;</span>
+    <br>
+    <label for="playerOneReady">Player 1 Ready:</label><span id="playerOneReady" style="background-color: red">&nbsp;</span>
+    <label for="playerTwoReady">Player 2 Ready:</label><span id="playerTwoReady" style="background-color: red">&nbsp;</span>
     <br><br>
-    <button type="button" class="btn btn-primary" onclick="setGame(false)">Start</button>
+    <button type="button" class="btn btn-primary" onclick="" id="readyButton">Ready</button>
 
     <script src="clientConnection.js"type="text/javascript"></script> 
 </body>
