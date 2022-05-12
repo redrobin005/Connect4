@@ -6,16 +6,16 @@ let enemyReady = false
 
 const socket = io()
 
-// get player num (which was emitted in server.js)
+// get player num of connected socket (which was emitted in server.js)
 socket.on('player-number', num => {
     infoDisplay = document.querySelector('#infoDisplay')
     if (num === -1) {
         infoDisplay.innerHTML = "Sorry server is full"
     }else{
         playerNum = parseInt(num)
-        // if (playerNum === 1) currentPlayer = "enemy"
+        if (playerNum === 1) currentPlayer = "enemy"
 
-        console.log('player num', playerNum)
+        // console.log('player num', playerNum)
 
         // check if player 1 is ready before player 2 even connects
         // get other player status
@@ -24,7 +24,9 @@ socket.on('player-number', num => {
 
 })
 
-// another player has connected/disconnected (on player 2 connection)
+// another player has connected/disconnected
+// because this player-connection message is sent from server via broadcast.emit, 
+// only other sockets, not the current socket will execute the following 
 socket.on('player-connection', num =>{
     console.log(`Player ${num} has connected or disconnected`)
     playerConnectedOrDisconnected(num)
@@ -32,13 +34,18 @@ socket.on('player-connection', num =>{
 
 function playerConnectedOrDisconnected(num){
     let player = num === 0 ? '#playerOneConn' : '#playerTwoConn'
-    let playerStatus = document.querySelector(player)
-    playerStatus.style.backgroundColor = 'green'
+    if (window.location.href === "http://localhost:3000/optionsOnline.html") {
+        let playerStatus = document.querySelector(player)
+        playerStatus.style.backgroundColor = 'green'
+    }
 }
 
-readyButton.addEventListener('click', () =>{
-    playGame(socket)
-})
+
+if (window.location.href === "http://localhost:3000/optionsOnline.html") {
+    readyButton.addEventListener('click', () =>{
+        playGame(socket)
+    })
+}
 
 function playGame(socket){
     // send message saying the player on this socket is ready 
@@ -50,17 +57,22 @@ function playGame(socket){
 
     // if both player 0 and player 1 click ready. continue to index.html
     if(enemyReady){
+        sessionStorage.setItem('randomAI', false)
+        sessionStorage.setItem('onlineGame', true)
+        sessionStorage.setItem('playerNum', playerNum)
         window.location.href = "index.html"
     }
 }
 
 function playerReady(num){
     let player = parseInt(num) === 0 ? '#playerOneReady' : '#playerTwoReady'
-    let playerStatus = document.querySelector(player)
-    playerStatus.style.backgroundColor = 'green'
+    if (window.location.href === "http://localhost:3000/optionsOnline.html") {
+        let playerStatus = document.querySelector(player)
+        playerStatus.style.backgroundColor = 'green'
+    }
 }
 
-// on enemy ready 
+// on enemy ready (sent from other client to server to this client)
 socket.on('enemy-ready', num => {
     enemyReady = true
     playerReady(num)

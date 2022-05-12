@@ -37,19 +37,21 @@ io.on('connection', socket => {
     // if player connected but not ready, then null to false
     connections[playerIndex] = false
 
-    // tell everyone the player num that has actually connected
+    // broadcast.emit only sends to clients that are not the current connection socket
+    // when player 1 connects, player 0 gets this message
     socket.broadcast.emit('player-connection', playerIndex)
     
     //handle disconnect
     socket.on('disconnect', () =>{
         console.log(`Player ${playerIndex} has disconnected`)
         connections[playerIndex] = null
-        // tell everyone what player just disconnected
+        // tell other client what player just disconnected
         socket.broadcast.emit('player-connection', playerIndex)
     })
 
     // on ready
     socket.on('player-ready', () => {
+        // tells other client that their enemy is ready
         socket.broadcast.emit('enemy-ready', playerIndex)
         connections[playerIndex] = true
     })
@@ -62,5 +64,19 @@ io.on('connection', socket => {
             players.push({connected:true, ready: connections[i]})
         }
         socket.emit('check-players', players)
+    })
+
+    // on col num receival
+    socket.on('col-num', colNum =>{
+        console.log('Received following colNum', colNum)
+        // send this grid to other player
+        socket.broadcast.emit('col-num', colNum)
+    })
+
+    // on turnCount receival
+    socket.on('turn-count', turnCnt =>{
+        console.log('Received following turnCount', turnCnt)
+        // send this grid to other player
+        socket.broadcast.emit('turn-count', turnCnt)
     })
 })

@@ -3,15 +3,33 @@ window.onload = function(){
     columnClick()
     turnAssign(0)
     setScore()
+
+    if (onlineGame && playerNumSess === 1){
+        freezeBoard()
+        //alert('Waiting for player 1')
+    } 
 }
 const randomAI = JSON.parse(getFromStorage('randomAI', false))
+console.log('randomai flag', randomAI)
+const onlineGame = JSON.parse(getFromStorage('onlineGame', false))
+let playerNumSess = JSON.parse(sessionStorage.getItem('playerNum'));
 let grid
+let turnCount = 0
+
+function freezeBoard(){
+    const gridElem = document.querySelector('#grid')
+    gridElem.style.pointerEvents = "none"
+}
+function unfreezeBoard(){
+    const gridElem = document.querySelector('#grid')
+    gridElem.style.pointerEvents = "auto"
+}
 
 function drawBoard(){
     rowSize = JSON.parse(getFromStorage('rowSize', 6));
     colSize = JSON.parse(getFromStorage('colSize', 7));
     grid = Array(rowSize).fill(null).map(() => Array(colSize).fill(null))
-    console.log(grid)
+    //console.log(grid)
     drawBoardHTML(rowSize, colSize)
 }
 
@@ -37,11 +55,21 @@ function columnClick(){
     cells.forEach(function(elem) {
         let colNum = elem.parentElement.getAttribute("col-num")
         colNum = parseInt(colNum)
-        elem.addEventListener("click", () => dropChip(colNum));
+        elem.addEventListener("click", () => takeTurn(colNum));
     });
 }
 
-let turnCount = 0
+function takeTurn(colNum){
+    dropChip(colNum)
+    ++turnCount;
+    turnAssign(turnCount)
+    if(randomAI && turnCount % 2 !== 0){randomMove()}
+    if(onlineGame){
+       sendMoveOnline(colNum)
+       switchOnlinePlayer()
+    }
+}
+
 function dropChip(colNum){
     for (let i = 0; i <  grid.length; i++) {
         const elem = grid[i][colNum]
@@ -61,10 +89,6 @@ function dropChip(colNum){
             }  
         }
     }
-    ++turnCount;
-    turnAssign(turnCount)
-    if(randomAI && turnCount % 2 !== 0){randomMove()}
-    console.log(grid)
 }
 
 function randomMove(){
@@ -73,9 +97,43 @@ function randomMove(){
     setTimeout(() => {
         const maxCol = grid[0].length
         const randCol = Math.floor(Math.random() * maxCol)
-        dropChip(randCol)
+        takeTurn(randCol)
         gridElem.style.pointerEvents = "auto"
       }, 1000);
+}
+
+function sendMoveOnline(colNum){
+    socket.emit('col-num', colNum)
+    socket.emit('turn-count', turnCount)
+}
+
+socket.on('col-num', colNum =>{
+    console.log('received colNum from other player', colNum)
+    dropChip(colNum)
+})
+
+socket.on('turn-count', turnCnt =>{
+    console.log('received turn from other player', turnCnt)
+    turnCount = turnCnt
+    switchOnlinePlayer()
+})
+
+function switchOnlinePlayer(){
+    console.log('turn count is',turnCount)
+    if (turnCount % 2 === 0) {
+        if (playerNumSess === 0) {
+            unfreezeBoard()
+        }else{
+            freezeBoard()
+        }
+    }else{
+        console.log('player num is', playerNumSess)
+        if (playerNumSess === 1) {
+            unfreezeBoard()
+        }else{
+            freezeBoard()
+        }
+    }
 }
 
 function turnAssign(turnCount){

@@ -10,7 +10,10 @@ function setGame(randomAI){
     sessionStorage.setItem('playerTwo', playerTwo)
     
     sessionStorage.setItem('randomAI', randomAI)
-    console.log(randomAI)
+    sessionStorage.setItem('onlineGame', false)
+
+    sessionStorage.setItem('playerOneScore', 0)
+    sessionStorage.setItem('playerTwoScore', 0)
     
     window.location.href = "index.html"
 }
