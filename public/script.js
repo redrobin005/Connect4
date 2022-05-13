@@ -4,19 +4,43 @@ window.onload = function(){
     turnAssign(0)
     setScore()
 
-    if (onlineGame && playerNumSess === 1){
-        let turnWait = document.querySelector('#turnWait')
-        turnWait.style.display = 'block'
-        freezeBoard()
-        //alert('Waiting for player 1')
+    if (onlineGame){
+        sendName()
+        initialisePlayerTwo()
     } 
 }
 const randomAI = JSON.parse(getFromStorage('randomAI', false))
-console.log('randomai flag', randomAI)
 const onlineGame = JSON.parse(getFromStorage('onlineGame', false))
 let playerNumSess = JSON.parse(sessionStorage.getItem('playerNum'));
 let grid
 let turnCount = 0
+
+function sendName(){
+    if (playerNumSess === 0) {
+        let playerOne = getFromStorage('playerOne', 'Aristotle')
+        socket.emit('player-name', playerOne)
+    }else{
+        let playerTwo = getFromStorage('playerTwo', 'Plato')
+        socket.emit('player-name', playerTwo)
+    }
+}
+socket.on('player-name', playerName =>{
+    console.log('received name of other player', playerName)
+    if (playerNumSess === 0) {
+        sessionStorage.setItem('playerTwo', playerName)
+    }else{
+        sessionStorage.setItem('playerOne', playerName)
+    }
+    turnAssign(0)
+})
+
+function initialisePlayerTwo(){
+    if (playerNumSess === 1){
+        let turnWait = document.querySelector('#turnWait')
+        turnWait.style.display = 'block'
+        freezeBoard()
+    }
+}
 
 function freezeBoard(){
     const gridElem = document.querySelector('#grid')
@@ -126,6 +150,7 @@ function switchOnlinePlayer(){
     if (turnCount % 2 === 0) {
         if (playerNumSess === 0) {
             turnWait.style.display = 'none'
+            turnAssign(turnCount)
             unfreezeBoard()
         }else{
             turnWait.style.display = 'block'
@@ -135,6 +160,7 @@ function switchOnlinePlayer(){
         console.log('player num is', playerNumSess)
         if (playerNumSess === 1) {
             turnWait.style.display = 'none'
+            turnAssign(turnCount)
             unfreezeBoard()
         }else{
             turnWait.style.display = 'block'

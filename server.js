@@ -79,4 +79,11 @@ io.on('connection', socket => {
         // send this grid to other player
         socket.broadcast.emit('turn-count', turnCnt)
     })
+
+    // on name receival
+    socket.on('player-name', playerName =>{
+        console.log('Received following name', playerName)
+        // send this name to other player
+        socket.broadcast.emit('player-name', playerName)
+    })
 })

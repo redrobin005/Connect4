@@ -13,6 +13,7 @@ socket.on('player-number', num => {
         infoDisplay.innerHTML = "Sorry server is full"
     }else{
         playerNum = parseInt(num)
+        disableNameInput()
         if (playerNum === 1) currentPlayer = "enemy"
 
         // console.log('player num', playerNum)
@@ -47,6 +48,29 @@ if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1) === "opt
     })
 }
 
+function disableNameInput(){
+    if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1) === "optionsOnline.html") {
+        if (playerNum === 0) {
+            let playerTwo = document.querySelector('#playerTwo')
+            playerTwo.disabled = true
+        }else{
+            let playerOne = document.querySelector('#playerOne')
+            playerOne.disabled = true
+            
+        }
+    }
+}
+
+function setNames(){
+    if (playerNum === 0) {
+        let playerOne = document.querySelector('#playerOne').value
+        sessionStorage.setItem('playerOne', playerOne)
+    }else{
+        let playerTwo = document.querySelector('#playerTwo').value
+        sessionStorage.setItem('playerTwo', playerTwo)
+    }
+}
+
 function playGame(socket){
     // send message saying the player on this socket is ready 
     if(!ready){
@@ -60,6 +84,7 @@ function playGame(socket){
         sessionStorage.setItem('randomAI', false)
         sessionStorage.setItem('onlineGame', true)
         sessionStorage.setItem('playerNum', playerNum)
+        setNames()
         window.location.href = "index.html"
     }
 }
