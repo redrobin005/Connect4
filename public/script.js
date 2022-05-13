@@ -5,6 +5,8 @@ window.onload = function(){
     setScore()
 
     if (onlineGame && playerNumSess === 1){
+        let turnWait = document.querySelector('#turnWait')
+        turnWait.style.display = 'block'
         freezeBoard()
         //alert('Waiting for player 1')
     } 
@@ -120,17 +122,22 @@ socket.on('turn-count', turnCnt =>{
 
 function switchOnlinePlayer(){
     console.log('turn count is',turnCount)
+    let turnWait = document.querySelector('#turnWait')
     if (turnCount % 2 === 0) {
         if (playerNumSess === 0) {
+            turnWait.style.display = 'none'
             unfreezeBoard()
         }else{
+            turnWait.style.display = 'block'
             freezeBoard()
         }
     }else{
         console.log('player num is', playerNumSess)
         if (playerNumSess === 1) {
+            turnWait.style.display = 'none'
             unfreezeBoard()
         }else{
+            turnWait.style.display = 'block'
             freezeBoard()
         }
     }

@@ -69,6 +69,14 @@ input {
     animation: transitionPage 0.75s;
 }
 
+#turnWait {
+    opacity: 1;
+    animation: fade 1.5s infinite;
+}
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
+}
 #turnScore {
     margin-left: 22vw;
     margin-bottom: 1vh;
