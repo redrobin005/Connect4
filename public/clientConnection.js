@@ -34,14 +34,14 @@ socket.on('player-connection', num =>{
 
 function playerConnectedOrDisconnected(num){
     let player = num === 0 ? '#playerOneConn' : '#playerTwoConn'
-    if (window.location.href === "http://localhost:3000/optionsOnline.html") {
+    if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1) === "optionsOnline.html") {
         let playerStatus = document.querySelector(player)
         playerStatus.style.backgroundColor = 'green'
     }
 }
 
 
-if (window.location.href === "http://localhost:3000/optionsOnline.html") {
+if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1) === "optionsOnline.html") {
     readyButton.addEventListener('click', () =>{
         playGame(socket)
     })
@@ -66,7 +66,7 @@ function playGame(socket){
 
 function playerReady(num){
     let player = parseInt(num) === 0 ? '#playerOneReady' : '#playerTwoReady'
-    if (window.location.href === "http://localhost:3000/optionsOnline.html") {
+    if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1) === "optionsOnline.html") {
         let playerStatus = document.querySelector(player)
         playerStatus.style.backgroundColor = 'green'
     }
