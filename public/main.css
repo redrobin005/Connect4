@@ -26,6 +26,10 @@ h2, h3{
     background-color: #0dcaf0;
     border-color: #0dcaf0;
 }
+.btn-modal{
+    font-size: x-large;
+    width: 150px;
+}
 
 #optionsPage, #startPage {
     position: absolute;
