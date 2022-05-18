@@ -1,5 +1,25 @@
 const {checkWinner, horizontalWin, verticalWin, posDiagonalWin, negDiagonalWin} = require('./checkWin.js')
 
+it("should return null with only one chip added", () => {
+    // Arrange
+    grid = [
+        [null, null, null, null, null, null, 'r'], 
+        [null, null, null, null, null, null, null], 
+        [null, null, null, null, null, null, null], 
+        [null, null, null, null, null, null, null], 
+        [null, null, null, null, null, null, null], 
+        [null, null, null, null, null, null, null], 
+    ];
+
+    const expectedOutput = null
+
+    // Act
+    const actualOutput =  checkWinner('r', 0, 6)
+
+    // Assert
+    expect(actualOutput).toStrictEqual(expectedOutput);
+});
+
 it("should return null if there are less than 4 chips of the same colour", () => {
     // Arrange
     grid = [

@@ -165,5 +165,6 @@ module.exports = {
     horizontalWin,
     verticalWin,
     posDiagonalWin,
-    negDiagonalWin
+    negDiagonalWin,
+    setScore
 }
