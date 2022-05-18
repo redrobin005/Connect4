@@ -84,6 +84,8 @@ function playGame(socket){
         sessionStorage.setItem('randomAI', false)
         sessionStorage.setItem('onlineGame', true)
         sessionStorage.setItem('playerNum', playerNum)
+        sessionStorage.setItem('playerOneScore', 0)
+        sessionStorage.setItem('playerTwoScore', 0)
         setNames()
         window.location.href = "index.html"
     }
