@@ -32,16 +32,12 @@ h2, h3{
 }
 
 #optionsPage, #startPage {
-    position: absolute;
-    top:  15%;
-    left: 30%;
+    margin-top: 20vh;
     animation:transitionPage 0.75s, MoveUpDown 2s linear infinite;
     font-size: xx-large;
 
 }
-#optionsPage {
-    left: 25%;
-}
+
 @keyframes MoveUpDown {
     0%, 100% {
       transform: translateY(0);
@@ -93,13 +89,14 @@ input {
 }
 #scoreBoard {
     margin-left: 10vw;
+    margin-bottom: 1vh;
 }
 #scoreTitle {
     font-size: xx-large;
 }
 .score{
     margin-top: 0px;
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 #grid{
