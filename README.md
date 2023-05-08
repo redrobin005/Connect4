@@ -1,2 +1,2 @@
 # Connect4
-<img width="454" alt="image" src="https://user-images.githubusercontent.com/73338013/236801508-b0e19106-00d4-4a79-9501-91f35a6d98b7.png">
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/73338013/236801975-18b1a21a-7a3d-45c7-9f85-40db9743c231.png">
